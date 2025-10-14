@@ -1,0 +1,18 @@
+<div class="items-list-container">
+  <!-- Поле пошуку -->
+  <input
+    type="text"
+    placeholder="Пошук товару..."
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchChange()"
+    style="margin-bottom: 16px; padding: 8px; width: 100%; max-width: 400px; border-radius: 6px; border: 1px solid #ccc;" />
+
+  <!-- Список елементів -->
+  <div class="items-list">
+    <app-item-card
+      *ngFor="let item of itemslist"
+      [card_of_item]="item"
+      (selectItem)="onItemSelected($event)">
+    </app-item-card>
+  </div>
+</div>

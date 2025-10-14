@@ -1,0 +1,24 @@
+<div class="item-card"
+     [ngClass]="{ 'hovered': showDetails, 'highlighted': showDetails }"
+     (mouseenter)="showDetails = true"
+     (mouseleave)="showDetails = false">
+
+  <img
+    [ngSrc]="card_of_item.image"
+    [alt]="card_of_item.name"
+    width="200"
+    height="200"
+    class="item-image">
+
+  <h3 class="item-name">{{ card_of_item.name }}</h3>
+  <p class="item-description">{{ card_of_item.shortDescription | shorten:40 }}</p>
+  <div class="item-price">Ціна: {{ card_of_item.awgPrice }} грн</div>
+
+  <button class="details-btn"
+    *ngIf="showDetails"
+    [routerLink]="['/items', card_of_item.id]">
+    Детальніше
+  </button>
+
+</div>
+
