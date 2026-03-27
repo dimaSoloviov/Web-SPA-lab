@@ -1,36 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { item } from '../shared/models/item.model';
 import { ItemCardSmall } from '../item-card-small/item-card-small';
-import { NgFor } from '@angular/common';
+import {AsyncPipe, NgFor} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../shared/services/data.service';
-import { Subscription } from 'rxjs';
+import { ItemDataService } from '../shared/services/item.data.service';
+import { Observable } from 'rxjs';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-items-list',
-  imports: [ItemCardSmall, NgFor, FormsModule],
+  imports: [ItemCardSmall, NgFor, FormsModule, AsyncPipe, RouterLink],
   templateUrl: './item-card-list.html',
   styleUrls: ['./item-card-list.css'],
 })
-export class ItemCardList implements OnInit, OnDestroy {
+export class ItemCardList {
   searchTerm: string = "";
-  itemslist: item[] = [];
-  private subscription!: Subscription;
+  itemslist$!: Observable<item[]>;
 
-  constructor(private dataService: DataService) {}
-
-  ngOnInit(): void {
-    // 🔹 підписка на BehaviorSubject
-    this.subscription = this.dataService.items$.subscribe(items => {
-      this.itemslist = items;
-    });
-  }
-
-  ngOnDestroy(): void {
-    // 🔹 відписка
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  constructor(private dataService: ItemDataService) {
+    this.itemslist$ = this.dataService.items$;
   }
 
   onSearchChange() {
@@ -41,3 +29,4 @@ export class ItemCardList implements OnInit, OnDestroy {
     console.log("Обраний товар:", selected);
   }
 }
+

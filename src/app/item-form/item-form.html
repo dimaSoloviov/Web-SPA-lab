@@ -1,0 +1,44 @@
+<div class="form-container">
+  <h2>Додати новий товар</h2>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+    <label>Назва:</label>
+    <input type="text" formControlName="name" />
+    <div *ngIf="f['name'].invalid && f['name'].touched" class="error">
+      Поле обов'язкове
+    </div>
+
+    <label>Зображення (URL):</label>
+    <input type="text" formControlName="image" />
+    <div *ngIf="f['image'].invalid && f['image'].touched" class="error">
+      Введіть посилання на зображення
+    </div>
+
+    <label>Короткий опис:</label>
+    <textarea formControlName="shortDescription"></textarea>
+    <div *ngIf="f['shortDescription'].invalid && f['shortDescription'].touched" class="error">
+      Обов'язкове поле (до 100 символів)
+    </div>
+
+    <label>Середня ціна:</label>
+    <input type="number" formControlName="awgPrice" />
+    <div *ngIf="f['awgPrice'].invalid && f['awgPrice'].touched" class="error">
+      Введіть коректну ціну (> 0)
+    </div>
+
+    <label>Повний опис:</label>
+    <textarea formControlName="fullDescription"></textarea>
+    <div *ngIf="f['fullDescription'].invalid && f['fullDescription'].touched" class="error">
+      Поле обов’язкове
+    </div>
+
+    <label>Характеристики:</label>
+    <textarea formControlName="specs"></textarea>
+    <div *ngIf="f['specs'].invalid && f['specs'].touched" class="error">
+      Поле обов’язкове
+    </div>
+
+    <button type="submit" [disabled]="itemForm.invalid">Додати</button>
+  </form>
+</div>
